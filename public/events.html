@@ -4,257 +4,9 @@
   <meta charset="UTF-8" />
   <title>Events | Pak Debate Forum</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Browse upcoming debates, workshops, training sessions and competitions hosted by Pak Debate Forum." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
-
-<style>
-    footer {
-      margin-top: 60px;
-      padding: 30px 0;
-      text-align: center;
-      color: #6f6f6f;
-      font-size: 0.9rem;
-      border-top: 1px solid #222;
-    }
-
-    .events-section {
-      padding: 60px 0;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 24px;
-      margin-top: 24px;
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(21,25,35,0.8), rgba(21,25,35,0.5));
-      border: 1px solid rgba(212, 175, 55, 0.2);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: all 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card:hover {
-      border-color: #d4af37;
-      box-shadow: 0 12px 40px rgba(212, 175, 55, 0.1);
-      transform: translateY(-4px);
-    }
-
-    .card-img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      background: rgba(212, 175, 55, 0.05);
-    }
-
-    .card-body {
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .card-meta {
-      color: #9ca3af;
-      font-size: 12px;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .card-title {
-      color: #d4af37;
-      font-size: 18px;
-      margin: 8px 0;
-      font-weight: 600;
-    }
-
-    .card-text {
-      color: #cbd5e1;
-      font-size: 13px;
-      line-height: 1.6;
-      margin-bottom: 16px;
-      flex-grow: 1;
-    }
-
-    .card-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 12px;
-      border-top: 1px solid rgba(212, 175, 55, 0.1);
-    }
-
-    .card-date {
-      color: #9ca3af;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .card-btn {
-      background: #d4af37;
-      color: #071019;
-      padding: 8px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 12px;
-      cursor: pointer;
-      border: none;
-      transition: all 0.2s;
-      display: inline-block;
-    }
-
-    .card-btn:hover {
-      background: #c78f2a;
-      transform: translateY(-2px);
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: #9ca3af;
-      grid-column: 1/-1;
-    }
-
-    .empty-state p {
-      font-size: 16px;
-      margin-bottom: 20px;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 40px 20px;
-      color: #9ca3af;
-      grid-column: 1/-1;
-    }
-
-    .page-hero {
-      padding: 60px 0 32px;
-      text-align: center;
-    }
-
-    .page-hero h1 {
-      font-size: clamp(28px, 5vw, 42px);
-      margin: 0 0 12px 0;
-      color: #e5e7eb;
-    }
-
-    .page-hero p {
-      color: #9ca3af;
-      margin: 0;
-      font-size: 16px;
-    }
-
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 60;
-      background: rgba(15, 17, 21, 0.9);
-      backdrop-filter: blur(6px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .nav-brand {
-      color: #d4af37;
-      font-weight: 600;
-      padding: 0;
-      font-size: 18px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 20px;
-    }
-
-    .nav-links a {
-      color: #9ca3af;
-      text-decoration: none;
-      transition: color 0.2s;
-      padding: 8px 0;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active {
-      color: #d4af37;
-    }
-
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    @media (max-width: 768px) {
-      .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-      }
-
-      .card-img {
-        height: 140px;
-      }
-
-      .card-body {
-        padding: 16px;
-      }
-
-      .card-title {
-        font-size: 16px;
-      }
-
-      .page-hero {
-        padding: 32px 20px 16px;
-      }
-
-      .page-hero h1 {
-        font-size:clamp(24px,5vw,28px);
-        margin-bottom:8px;
-      }
-
-      .page-hero p {
-        font-size:14px;
-      }
-
-      .events-section {
-        padding: 24px 20px;
-      }
-
-      .card-row {
-        flex-wrap:wrap;
-        gap:8px;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .cards-grid {
-        gap: 12px;
-      }
-
-      .card-body {
-        padding: 12px;
-      }
-
-      .card-text {
-        font-size: 12px;
-      }
-
-      .card-btn {
-        padding: 6px 14px;
-        font-size: 11px;
-      }
-
-      .events-section {
-        padding: 16px 16px;
-      }
-    }
-    </style>
 </head>
 <body>
 
@@ -273,20 +25,20 @@
         <a href="events.html" class="active">Events</a>
         <a href="resources.html">Resources</a>
         <a href="about.html">About</a>
-        <a href="feedback.html">Feedback</a>
+        <a href="feedback.html" class="btn-nav">Feedback</a>
       </nav>
     </div>
   </header>
 
   <!-- EVENTS HERO -->
-  <section class="page-hero" style="background: linear-gradient(180deg, rgba(212, 175, 55, 0.05), transparent); padding: 48px 20px 24px;">
+  <section class="page-hero">
     <h1>All Events</h1>
-    <p>Debates, workshops, training sessions & competitions.</p>
+    <p>Debates, workshops, training sessions &amp; competitions.</p>
   </section>
 
   <!-- EVENTS GRID -->
-  <section class="events-section" style="padding: 40px 20px;">
-    <div style="max-width: 1200px; margin: 0 auto;">
+  <section class="events-section">
+    <div class="container">
       <div class="cards-grid" id="eventsContainer">
         <div class="loading">Loading events...</div>
       </div>
@@ -298,8 +50,21 @@
   </section>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <p>© 2025 Pak Debate Forum. All rights reserved.</p>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="left">
+        <div class="brand-small">⟡ Pak Debate Forum</div>
+        <p class="muted">© 2025 Pak Debate Forum • Empowering debate culture in Pakistan</p>
+      </div>
+      <div class="right">
+        <nav class="footer-nav">
+          <a href="index.html">Home</a>
+          <a href="events.html">Events</a>
+          <a href="about.html">About</a>
+          <a href="feedback.html">Feedback</a>
+        </nav>
+      </div>
+    </div>
   </footer>
 
 <script>

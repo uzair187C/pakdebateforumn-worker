@@ -4,32 +4,30 @@
   <meta charset="UTF-8">
   <title>Registration | Pak Debate Forum</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="description" content="Register for Pakistan Pre WSDC 2025 — official registration by Pak Debate Forum." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-
-<style>
-    footer {
-      margin-top: 60px;
-      padding: 30px 0;
-      text-align: center;
-      color: #6f6f6f;
-      font-size: 0.9rem;
-      border-top: 1px solid #222;
-    }
-    </style>
 <body>
 
   <!-- NAVBAR -->
   <header class="navbar">
-    <div class="nav-brand">Pak Debate Forum</div>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="events.html">Events</a>
-      <a href="resources.html">Resources</a>
-      <a href="about.html">About</a>
-      <a href="feedback.html">Feedback</a>
-    </nav>
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <img src="img/pdflogo.png" alt="Pak Debate Forum">
+        <span class="brand-text">Pak Debate Forum</span>
+      </a>
+
+      <button id="nav-toggle" aria-label="Toggle menu" class="nav-toggle">☰</button>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About</a>
+        <a href="feedback.html" class="btn-nav">Feedback</a>
+      </nav>
+    </div>
   </header>
 
   <!-- PAGE HEADER -->
@@ -92,14 +90,14 @@
             <textarea rows="4"></textarea>
           </div>
 
-          <button type="submit">Submit Registration</button>
+          <button type="submit" class="btn-submit">Submit Registration</button>
         </form>
       </div>
 
       <div class="card">
-        <h2>Fees & Notes</h2>
-        <p>Phase 1: PKR 3,000 (Nov 8 – Dec 8)</p>
-        <p>Phase 2: PKR 5,000 (Dec 8 – Dec 31)</p>
+        <h2>Fees &amp; Notes</h2>
+        <p class="muted">Phase 1: PKR 3,000 (Nov 8 – Dec 8)</p>
+        <p class="muted">Phase 2: PKR 5,000 (Dec 8 – Dec 31)</p>
         <p><strong>Missing Judge Fee:</strong> PKR 6,000</p>
         <p><strong>NO REFUNDS ALLOWED</strong></p>
       </div>
@@ -107,10 +105,31 @@
     </div>
   </section>
 
-   <!-- FOOTER -->
-  <footer class="footer">
-<p>© 2025 Pak Debate Forum · Built for thinkers & leaders</p>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="left">
+        <div class="brand-small">⟡ Pak Debate Forum</div>
+        <p class="muted">© 2025 Pak Debate Forum • Empowering debate culture in Pakistan</p>
+      </div>
+      <div class="right">
+        <nav class="footer-nav">
+          <a href="index.html">Home</a>
+          <a href="events.html">Events</a>
+          <a href="about.html">About</a>
+          <a href="feedback.html">Feedback</a>
+        </nav>
+      </div>
+    </div>
   </footer>
+
+<script>
+  const btn = document.getElementById('nav-toggle');
+  const links = document.getElementById('nav-links');
+  btn.addEventListener('click', (e) => { e.stopPropagation(); links.classList.toggle('open'); });
+  links.querySelectorAll('a').forEach(link => { link.addEventListener('click', () => { links.classList.remove('open'); }); });
+  document.addEventListener('click', (e) => { if (!e.target.closest('.navbar')) { links.classList.remove('open'); } });
+</script>
 
 </body>
 </html>
