@@ -1,0 +1,70 @@
+# ==================== SECRETS & ENVIRONMENT ====================
+# Never commit credentials, API keys, or secrets
+.dev.vars
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+*.key
+*.pem
+
+# ==================== DEPENDENCIES ====================
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ==================== BUILD & OUTPUTS ====================
+dist/
+build/
+.tsbuildinfo
+*.tgz
+
+# ==================== IDE & EDITOR ====================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.env.swp
+
+# ==================== OS ====================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+
+# ==================== LOGS ====================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==================== CLOUDFLARE ====================
+# Local Wrangler state
+.wrangler/
+wrangler.toml.local
+
+# ==================== DATABASE ====================
+# Local D1 database (development only)
+*.db
+*.sqlite
+*.sqlite3
+
+# ==================== PROJECT SPECIFIC ====================
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# ==================== IMPORTANT: NEVER REMOVE THIS ====================
+# If you need to share config structure, use .example files instead
+# Example: .dev.vars.example (without actual secrets)

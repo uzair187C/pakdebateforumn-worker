@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Login - Pak Debate Forum</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, #0f1115 0%, #1a1f2e 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      color: #d4af37;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      color: #9ca3af;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      color: #e5e7eb;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      color: #e5e7eb;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.12);
+      border-color: #d4af37;
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    }
+
+    input::placeholder {
+      color: #6b7280;
+    }
+
+    .button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #d4af37 0%, #f4d860 100%);
+      border: none;
+      border-radius: 8px;
+      color: #0f1115;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    .button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+    }
+
+    .button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .error-message {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .error-message.show {
+      display: block;
+      animation: slideIn 0.3s ease;
+    }
+
+    .success-message {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      color: #86efac;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      display: none;
+      text-align: center;
+    }
+
+    .success-message.show {
+      display: block;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(15, 17, 21, 0.2);
+      border-top-color: #0f1115;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .info-box {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      margin-top: 20px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 30px 24px;
+      }
+
+      .logo {
+        font-size: 28px;
+      }
+
+      .button {
+        padding: 12px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="header">
+        <div class="logo">🎤 PDF Admin</div>
+        <p class="subtitle">Secure Management Portal</p>
+      </div>
+
+      <form id="loginForm">
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message">✓ Login successful! Redirecting...</div>
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter your username"
+            required
+            autocomplete="username"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            required
+            autocomplete="current-password"
+          />
+        </div>
+
+        <button type="submit" class="button" id="submitBtn">
+          <span id="btnText">Login Securely</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    const errorDiv = document.getElementById("errorMessage");
+    const successDiv = document.getElementById("successMessage");
+    const submitBtn = document.getElementById("submitBtn");
+    const btnText = document.getElementById("btnText");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      errorDiv.classList.remove("show");
+      successDiv.classList.remove("show");
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      if (!username || !password) {
+        showError("Please enter both username and password");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      btnText.innerHTML = '<span class="loading-spinner"></span>Logging in...';
+
+      try {
+        const response = await fetch("/api/admin/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          showError(data.error || "Login failed. Please try again.");
+          submitBtn.disabled = false;
+          btnText.textContent = "Login Securely";
+          return;
+        }
+
+        if (data.success && data.token) {
+          // Store token in localStorage
+          localStorage.setItem("adminToken", data.token);
+          console.log("✓ Login successful! Token stored.");
+
+          // Show success message
+          successDiv.classList.add("show");
+
+          // Redirect after short delay
+          setTimeout(() => {
+            window.location.href = "/admin-portal.html";
+          }, 1500);
+        } else {
+          showError("Login failed. Please try again.");
+          submitBtn.disabled = false;
+          btnText.textContent = "Login Securely";
+        }
+      } catch (error) {
+        console.error("Login error:", error);
+        showError(`Error: ${error.message}`);
+        submitBtn.disabled = false;
+        btnText.textContent = "Login Securely";
+      }
+    });
+
+    function showError(message) {
+      errorDiv.textContent = message;
+      errorDiv.classList.add("show");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Check if already logged in
+    window.addEventListener("load", () => {
+      const token = localStorage.getItem("adminToken");
+      if (token) {
+        // Verify token is still valid by trying to access admin endpoint
+        // For now, just redirect to admin portal if token exists
+        // The admin-portal will handle token validation
+        console.log("✓ Token found. Redirecting to admin portal...");
+        setTimeout(() => {
+          window.location.href = "/admin-portal.html";
+        }, 500);
+      }
+    });
+  </script>
+</body>
+</html>

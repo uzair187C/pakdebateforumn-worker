@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pak Debate Forum</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <img src="img/pdflogo.png" alt="Pak Debate Forum">
+        <span class="brand-text">Pak Debate Forum</span>
+      </a>
+
+      <button id="nav-toggle" aria-label="Toggle menu" class="nav-toggle">☰</button>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="events.html">Events</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About</a>
+        <a href="feedback.html" class="btn-nav">Feedback</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <h1>Shaping minds. Powering dialogue.</h1>
+          <p class="lead">Pakistan’s platform for debate, policy discussion and youth leadership. Join online events, access resources, and connect with speakers & coaches.</p>
+          <div class="hero-ctas">
+            <a href="events.html" class="btn-primary">View Events</a>
+            <a href="about.html" class="btn-ghost">About Us</a>
+          </div>
+        </div>
+
+        <div class="hero-card" id="heroCard">
+          <div class="meta">Next Event</div>
+          <div style="padding: 20px; text-align: center; color: #cbd5e1;">Loading featured event...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENTS PREVIEW -->
+    <section class="section container">
+      <h2 class="section-title">Upcoming Events</h2>
+      <div class="cards-grid" id="eventsContainer">
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #9ca3af;">
+          Loading events...
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT / TEAM SNIPPET -->
+    <section class="section section-dark">
+      <div class="container">
+        <h2 class="section-title">Meet the Team</h2>
+        <p class="muted">Core organisers behind Pak Debate Forum</p>
+
+        <div class="team-grid">
+
+          <div class="team-card">
+            <img src="/img/abdul-wassay.png" alt="Abdul Wassay" class="avatar">
+            <h4>Abdul Wassay</h4>
+            <p class="muted">Co-founder</p>
+            <div class="socials">
+              <a href="#" aria-label="instagram">IG</a>
+              <a href="#" aria-label="whatsapp">WA</a>
+              <a href="#" aria-label="email">Email</a>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <img src="/img/hamzaa.PNG" alt="Hamza Javed" class="avatar">
+            <h4>Hamza Javed</h4>
+            <p class="muted">Co-founder</p>
+            <div class="socials">
+              <a href="#" aria-label="instagram">IG</a>
+              <a href="#" aria-label="whatsapp">WA</a>
+              <a href="#" aria-label="email">Email</a>
+            </div>
+          </div>
+
+          <div class="team-card">
+            <img src="/img/jawadd.PNG" alt="Jawad Ahmad" class="avatar">
+            <h4>Jawad Ahmad</h4>
+            <p class="muted">Vice President</p>
+            <div class="socials">
+              <a href="#" aria-label="instagram">IG</a>
+              <a href="#" aria-label="whatsapp">WA</a>
+              <a href="#" aria-label="email">Email</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section container cta">
+      <div class="card cta-card">
+        <h3>Want to host an event with us?</h3>
+        <p class="muted">Fill the event request form and our team will contact you.</p>
+        <a href="events.html" class="btn-primary">Request Event</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="left">
+        <div class="brand-small">
+        <span>⟡</span> Pak Debate Forum
+      </div>
+        <p class="muted">© 2025 Pak Debate Forum • Empowering debate culture in Pakistan</p>
+      </div>
+      <div class="right">
+        <nav class="footer-nav">
+          <a href="index.html">Home</a>
+          <a href="events.html">Events</a>
+          <a href="about.html">About</a>
+          <a href="feedback.html">Feedback</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // simple nav toggle with auto-close
+    const btn = document.getElementById('nav-toggle');
+    const links = document.getElementById('nav-links');
+    
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      links.classList.toggle('open');
+    });
+
+    // Close menu when a link is clicked
+    links.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        links.classList.remove('open');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.navbar')) {
+        links.classList.remove('open');
+      }
+    });
+
+    // Load events dynamically
+    async function loadHomePageEvents() {
+      try {
+        const res = await fetch('/api/events');
+        const data = await res.json();
+
+        if (!data.success || !data.events || data.events.length === 0) {
+          document.getElementById('eventsContainer').innerHTML = 
+            '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #9ca3af;">No upcoming events yet. Check back soon!</div>';
+          return;
+        }
+
+        // Load featured event in hero
+        const featured = data.events[0];
+        document.getElementById('heroCard').innerHTML = `
+          <div class="meta">Next Event</div>
+          <h3>${featured.title}</h3>
+          <p class="muted">Registration Open · Pak Debate Forum</p>
+          <p class="card-desc">${featured.description || 'Join us for this exciting event!'}</p>
+          <a href="form.html?id=${featured.id}" class="btn-small">Register</a>
+        `;
+
+        const container = document.getElementById('eventsContainer');
+        container.innerHTML = data.events.slice(0, 3).map(event => `
+          <article class="card">
+            <img src="/img/pdflogo.png" alt="${event.title}" class="card-img">
+            <div class="card-body">
+              <div class="card-meta">Pak Debate Forum</div>
+              <h3 class="card-title">${event.title}</h3>
+              <p class="card-text">${event.description || 'Join us for this exciting event!'}</p>
+              <div class="card-row">
+                <span class="card-date">${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                <a href="form.html?id=${event.id}" class="card-btn">Register</a>
+              </div>
+            </div>
+          </article>
+        `).join('');
+      } catch (error) {
+        console.error('Error loading events:', error);
+        document.getElementById('eventsContainer').innerHTML = 
+          '<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #ef4444;">Error loading events</div>';
+      }
+    }
+
+    // Load events when page is ready
+    document.addEventListener('DOMContentLoaded', loadHomePageEvents);
+  </script>
+
+</body>
+</html>

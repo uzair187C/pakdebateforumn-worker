@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pak Debate Forum – Admin Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 100%);
+      color: #e5e7eb;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* HEADER */
+    .header {
+      background: rgba(2, 6, 23, 0.8);
+      padding: 20px 30px;
+      border-bottom: 2px solid #1e293b;
+      margin-bottom: 30px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+    }
+
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 5px;
+      color: #60a5fa;
+    }
+
+    .header p {
+      color: #94a3b8;
+      font-size: 14px;
+    }
+
+    /* TABS */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #1e293b;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 12px 20px;
+      background: transparent;
+      border: none;
+      color: #94a3b8;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .tab-btn:hover {
+      color: #60a5fa;
+    }
+
+    .tab-btn.active {
+      color: #60a5fa;
+      border-bottom-color: #60a5fa;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* CARDS */
+    .card {
+      background: rgba(2, 6, 23, 0.6);
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .card h2 {
+      color: #60a5fa;
+      margin-bottom: 20px;
+      font-size: 20px;
+    }
+
+    .card h3 {
+      color: #cbd5e1;
+      margin-top: 20px;
+      margin-bottom: 15px;
+      font-size: 16px;
+    }
+
+    /* FORMS */
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px 12px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid #334155;
+      color: #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border 0.3s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* BUTTONS */
+    button {
+      padding: 10px 16px;
+      background: #2563eb;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #64748b;
+    }
+
+    .btn-secondary:hover {
+      background: #475569;
+    }
+
+    .btn-danger {
+      background: #dc2626;
+    }
+
+    .btn-danger:hover {
+      background: #b91c1c;
+    }
+
+    .btn-success {
+      background: #16a34a;
+    }
+
+    .btn-success:hover {
+      background: #15803d;
+    }
+
+    /* GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    /* EVENT CARDS */
+    .event-card {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .event-card:hover {
+      border-color: #60a5fa;
+      background: rgba(30, 41, 59, 1);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(96, 165, 250, 0.1);
+    }
+
+    .event-card h3 {
+      color: #60a5fa;
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .event-card .event-id {
+      color: #94a3b8;
+      font-size: 12px;
+      font-family: monospace;
+      margin-bottom: 10px;
+    }
+
+    .event-card p {
+      color: #cbd5e1;
+      font-size: 13px;
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+
+    .event-stats {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      font-size: 12px;
+    }
+
+    .event-stat {
+      color: #94a3b8;
+    }
+
+    .event-stat strong {
+      color: #60a5fa;
+    }
+
+    .event-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .event-actions button {
+      flex: 1;
+      padding: 8px 12px;
+      font-size: 12px;
+    }
+
+    /* TABLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    table th {
+      background: rgba(30, 41, 59, 0.8);
+      padding: 12px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+      color: #60a5fa;
+      border-bottom: 1px solid #334155;
+    }
+
+    table td {
+      padding: 12px;
+      border-bottom: 1px solid #1e293b;
+      color: #cbd5e1;
+      font-size: 13px;
+    }
+
+    table tr:hover {
+      background: rgba(30, 41, 59, 0.5);
+    }
+
+    /* STATS */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .stat-box {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 32px;
+      font-weight: 700;
+      color: #60a5fa;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* MODAL */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      font-size: 20px;
+      font-weight: 600;
+      color: #60a5fa;
+      margin-bottom: 20px;
+    }
+
+    .modal-close {
+      float: right;
+      font-size: 24px;
+      cursor: pointer;
+      color: #94a3b8;
+      background: none;
+      border: none;
+      padding: 0;
+      margin-top: -30px;
+      margin-right: -30px;
+    }
+
+    .modal-close:hover {
+      color: #60a5fa;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .modal-actions button {
+      flex: 1;
+    }
+
+    /* ALERT */
+    .alert {
+      padding: 12px 16px;
+      border-radius: 6px;
+      margin-bottom: 15px;
+      font-size: 13px;
+      animation: slideIn 0.3s ease;
+    }
+
+    .alert-success {
+      background: rgba(22, 163, 74, 0.2);
+      border: 1px solid #16a34a;
+      color: #86efac;
+    }
+
+    .alert-error {
+      background: rgba(220, 38, 38, 0.2);
+      border: 1px solid #dc2626;
+      color: #fca5a5;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #94a3b8;
+    }
+
+    .empty-state p {
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .tabs {
+        flex-wrap: wrap;
+      }
+
+      .tab-btn {
+        padding: 10px 16px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- HEADER -->
+  <div class="header">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h1>📊 Admin Portal</h1>
+        <p>Pak Debate Forum Management System</p>
+      </div>
+      <button onclick="logout()" class="btn-danger" style="padding: 10px 20px; align-self: flex-start;">🚪 Logout</button>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('dashboard', this)">Dashboard</button>
+    <button class="tab-btn" onclick="switchTab('events', this)">Events</button>
+    <button class="tab-btn" onclick="switchTab('feedback', this)">Feedback</button>
+  </div>
+
+  <!-- ALERTS -->
+  <div id="alertContainer"></div>
+
+  <!-- DASHBOARD TAB -->
+  <div id="dashboard" class="tab-content active">
+    <div class="card">
+      <h2>📈 Quick Statistics</h2>
+      <div class="stats-grid" id="statsGrid"></div>
+    </div>
+
+    <div class="card">
+      <h2>🔥 Top Events</h2>
+      <div id="topEventsContainer"></div>
+    </div>
+  </div>
+
+  <!-- EVENTS TAB -->
+  <div id="events" class="tab-content">
+    <div class="card">
+      <h2>➕ Create New Event</h2>
+      <div class="form-group">
+        <label>Event ID</label>
+        <input id="newEventId" placeholder="e.g., wsdc-2025" />
+      </div>
+      <div class="form-group">
+        <label>Event Title</label>
+        <input id="newEventTitle" placeholder="e.g., World Schools Debate Championship" />
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="newEventDesc" placeholder="Event description..."></textarea>
+      </div>
+      <button onclick="handleCreateEvent()">Create Event</button>
+    </div>
+
+    <div class="card">
+      <h2>📋 All Events</h2>
+      <div id="eventsContainer"></div>
+    </div>
+  </div>
+
+  <!-- FEEDBACK TAB -->
+  <div id="feedback" class="tab-content">
+    <div class="card">
+      <h2>💬 All Feedback</h2>
+      <div style="overflow-x: auto;">
+        <table style="width: 100%;">
+          <thead>
+            <tr style="border-bottom: 1px solid #1e293b;">
+              <th style="text-align: left; padding: 12px; color: #60a5fa; font-weight: 600;">Name</th>
+              <th style="text-align: left; padding: 12px; color: #60a5fa; font-weight: 600;">Email</th>
+              <th style="text-align: left; padding: 12px; color: #60a5fa; font-weight: 600;">Type</th>
+              <th style="text-align: left; padding: 12px; color: #60a5fa; font-weight: 600;">Rating</th>
+              <th style="text-align: left; padding: 12px; color: #60a5fa; font-weight: 600;">Date</th>
+              <th style="text-align: left; padding: 12px; color: #60a5fa; font-weight: 600;">Feedback</th>
+            </tr>
+          </thead>
+          <tbody id="feedbackTableBody">
+            <tr><td colspan="6" style="padding: 20px; text-align: center; color: #6f6f6f;">Loading feedback...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODALS -->
+
+<!-- EVENT DETAIL MODAL -->
+<div id="eventModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('eventModal')">×</button>
+    <div class="modal-header">Event Details</div>
+    
+    <div id="eventDetails"></div>
+  </div>
+</div>
+
+<!-- ADD QUESTION MODAL -->
+<div id="questionModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('questionModal')">×</button>
+    <div class="modal-header">Add Question</div>
+    
+    <div class="form-group">
+      <label>Question Text</label>
+      <input id="questionText" placeholder="Enter question..." />
+    </div>
+    <div class="form-group">
+      <label>Type</label>
+      <select id="questionType">
+        <option value="text">Text</option>
+        <option value="email">Email</option>
+        <option value="phone">Phone</option>
+        <option value="textarea">Textarea</option>
+        <option value="select">Select</option>
+        <option value="radio">Radio</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Options (JSON - for select/radio)</label>
+      <input id="questionOptions" placeholder='["Option 1","Option 2"]' />
+    </div>
+    <div class="form-group">
+      <label>Order Number</label>
+      <input id="questionOrder" type="number" value="1" />
+    </div>
+    <label>
+      <input type="checkbox" id="questionRequired" />
+      Required
+    </label>
+
+    <div class="modal-actions">
+      <button onclick="closeModal('questionModal')" class="btn-secondary">Cancel</button>
+      <button onclick="handleAddQuestion()" class="btn-success">Add Question</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT EVENT MODAL -->
+<div id="editEventModal" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal('editEventModal')">×</button>
+    <div class="modal-header">Edit Event</div>
+    
+    <div class="form-group">
+      <label>Event Title</label>
+      <input id="editEventTitle" />
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea id="editEventDesc"></textarea>
+    </div>
+    <label>
+      <input type="checkbox" id="editEventActive" />
+      Active
+    </label>
+
+    <div class="modal-actions">
+      <button onclick="closeModal('editEventModal')" class="btn-secondary">Cancel</button>
+      <button onclick="handleUpdateEvent()" class="btn-success">Update</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ================ TOKEN MANAGEMENT ================
+let adminToken = null;
+
+// Initialize - check token on page load
+window.addEventListener('load', async () => {
+  adminToken = localStorage.getItem('adminToken');
+  
+  if (!adminToken) {
+    console.log('No token found. Redirecting to login...');
+    window.location.href = '/admin-login.html';
+    return;
+  }
+
+  console.log('✓ Token found. Admin portal ready.');
+  console.log('Attempting to load dashboard...');
+  try {
+    await loadDashboard();
+  } catch (error) {
+    console.error('Error loading dashboard:', error);
+    showAlert('Error loading dashboard: ' + error.message, 'error');
+  }
+});
+
+// Get authorization headers
+function getAuthHeaders() {
+  return {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${adminToken}`
+  };
+}
+
+// Authenticated fetch helper
+async function authenticatedFetch(url, options = {}) {
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      ...getAuthHeaders(),
+      ...(options.headers || {})
+    }
+  });
+
+  // Handle 401 Unauthorized - token expired or invalid
+  if (response.status === 401) {
+    console.log('Token expired or invalid. Redirecting to login...');
+    localStorage.removeItem('adminToken');
+    window.location.href = '/admin-login.html';
+    return null;
+  }
+
+  return response;
+}
+
+// Logout function
+function logout() {
+  if (!confirm('Are you sure you want to logout?')) return;
+  
+  localStorage.removeItem('adminToken');
+  adminToken = null;
+  console.log('✓ Logged out successfully');
+  window.location.href = '/admin-login.html';
+}
+
+// ================ ADMIN FUNCTIONS ================
+let allEvents = [];
+let currentEventId = null;
+
+function showAlert(message, type = 'success') {
+  const alertContainer = document.getElementById('alertContainer');
+  const alert = document.createElement('div');
+  alert.className = `alert alert-${type}`;
+  alert.textContent = message;
+  alertContainer.appendChild(alert);
+  
+  setTimeout(() => alert.remove(), 3000);
+}
+
+function switchTab(tabName, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  
+  document.getElementById(tabName).classList.add('active');
+  if (btn && btn.classList) btn.classList.add('active');
+  
+  if (tabName === 'dashboard') loadDashboard();
+  if (tabName === 'events') loadEvents();
+  if (tabName === 'feedback') loadFeedbacks();
+}
+
+function openModal(modalId) {
+  document.getElementById(modalId).classList.add('active');
+}
+
+function closeModal(modalId) {
+  document.getElementById(modalId).classList.remove('active');
+}
+
+async function handleCreateEvent() {
+  const id = document.getElementById('newEventId').value;
+  const title = document.getElementById('newEventTitle').value;
+  const desc = document.getElementById('newEventDesc').value;
+
+  if (!id || !title) {
+    showAlert('Event ID and Title are required', 'error');
+    return;
+  }
+
+  const res = await authenticatedFetch('/api/admin/create-event', {
+    method: 'POST',
+    body: JSON.stringify({ id, title, description: desc })
+  });
+
+  if (!res) return;
+
+  const data = await res.json();
+  if (data.success) {
+    showAlert('Event created successfully!');
+    document.getElementById('newEventId').value = '';
+    document.getElementById('newEventTitle').value = '';
+    document.getElementById('newEventDesc').value = '';
+    loadEvents();
+  } else {
+    showAlert('Error: ' + data.error, 'error');
+  }
+}
+
+async function loadDashboard() {
+  console.log('Loading dashboard...');
+  const res = await authenticatedFetch('/api/events');
+  if (!res) {
+    console.error('Failed to fetch events');
+    return;
+  }
+  
+  const data = await res.json();
+  console.log('Events data:', data);
+  const events = data.events || [];
+  console.log('Events count:', events.length);
+
+  // Calculate stats
+  let totalQuestions = 0;
+  let totalSubmissions = 0;
+  
+  for (const event of events) {
+    const formRes = await authenticatedFetch(`/api/form?id=${event.id}`);
+    if (formRes) {
+      const formData = await formRes.json();
+      totalQuestions += formData.questions ? formData.questions.length : 0;
+    }
+    
+    const detailRes = await authenticatedFetch(`/api/admin/event-detail?id=${event.id}`);
+    if (detailRes) {
+      const detailData = await detailRes.json();
+      if (detailData.success && detailData.responses) {
+        totalSubmissions += detailData.responses.length;
+      }
+    }
+  }
+
+  const statsHtml = `
+    <div class="stat-box">
+      <div class="stat-number">${events.length}</div>
+      <div class="stat-label">Total Events</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">${totalQuestions}</div>
+      <div class="stat-label">Total Questions</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">${totalSubmissions}</div>
+      <div class="stat-label">Total Submissions</div>
+    </div>
+  `;
+
+  document.getElementById('statsGrid').innerHTML = statsHtml;
+
+  // Top events by submissions
+  const topEvents = await Promise.all(
+    events.map(async (event) => {
+      const res = await authenticatedFetch(`/api/admin/event-detail?id=${event.id}`);
+      if (!res) return { ...event, submissionCount: 0 };
+      const data = await res.json();
+      return { ...event, submissionCount: data.success && data.responses ? data.responses.length : 0 };
+    })
+  );
+
+  topEvents.sort((a, b) => b.submissionCount - a.submissionCount);
+
+  const topHtml = topEvents.slice(0, 5).map((e, i) => `
+    <div style="display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1e293b;">
+      <span><strong>${i + 1}. ${e.title}</strong></span>
+      <span style="color: #60a5fa;">${e.submissionCount} submissions</span>
+    </div>
+  `).join('');
+
+  document.getElementById('topEventsContainer').innerHTML = topHtml || '<p style="color: #94a3b8; text-align: center; padding: 20px;">No events yet</p>';
+  console.log('Dashboard loaded successfully');
+}
+
+async function loadEvents() {
+  console.log('Loading events...');
+  const res = await authenticatedFetch('/api/events');
+  if (!res) {
+    console.error('Failed to fetch events');
+    return;
+  }
+  
+  const data = await res.json();
+  console.log('Events response:', data);
+  allEvents = data.events || [];
+  console.log('All events:', allEvents);
+
+  const container = document.getElementById('eventsContainer');
+  
+  if (allEvents.length === 0) {
+    container.innerHTML = '<div class="empty-state"><p>No events yet. Create your first event above!</p></div>';
+    return;
+  }
+
+  const eventsHtml = await Promise.all(
+    allEvents.map(async (event) => {
+      let questionCount = 0;
+      let submissionCount = 0;
+      
+      try {
+        const formRes = await authenticatedFetch(`/api/form?id=${event.id}`);
+        if (formRes) {
+          const formData = await formRes.json();
+          questionCount = formData.questions ? formData.questions.length : 0;
+        }
+
+        const detailRes = await authenticatedFetch(`/api/admin/event-detail?id=${event.id}`);
+        if (detailRes) {
+          const detailData = await detailRes.json();
+          submissionCount = (detailData.success && detailData.responses) ? detailData.responses.length : 0;
+        }
+      } catch (error) {
+        console.error(`Error loading details for event ${event.id}:`, error);
+      }
+
+      return `
+        <div class="event-card">
+          <h3>${event.title}</h3>
+          <div class="event-id">${event.id}</div>
+          <p>${event.description || 'No description'}</p>
+          <div class="event-stats">
+            <span class="event-stat">📝 <strong>${questionCount}</strong> Questions</span>
+            <span class="event-stat">📋 <strong>${submissionCount}</strong> Submissions</span>
+          </div>
+          <div class="event-actions">
+            <button onclick="handleViewEvent('${event.id}')" class="btn-secondary">View</button>
+            <button onclick="handleEditEventModal('${event.id}', '${event.title}', '${(event.description || '').replace(/'/g, "\\'")}')">Edit</button>
+            <button onclick="handleDeleteEvent('${event.id}')" class="btn-danger">Delete</button>
+          </div>
+        </div>
+      `;
+    })
+  );
+
+  const gridHtml = `<div class="grid">${eventsHtml.join('')}</div>`;
+  container.innerHTML = gridHtml;
+  console.log('Events loaded successfully');
+}
+
+async function handleViewEvent(eventId) {
+  currentEventId = eventId;
+  const event = allEvents.find(e => e.id === eventId);
+  const res = await authenticatedFetch(`/api/admin/event-detail?id=${eventId}`);
+  
+  if (!res) return;
+  
+  const data = await res.json();
+
+  if (!data.success) {
+    showAlert('Failed to load event details', 'error');
+    return;
+  }
+
+  let questionsHtml = '';
+  if (data.questions.length === 0) {
+    questionsHtml = '<p style="color: #94a3b8; text-align: center; padding: 20px;">No questions yet</p>';
+  } else {
+    questionsHtml = `<table>
+      <thead><tr><th>Question</th><th>Type</th><th>Required</th><th>Action</th></tr></thead>
+      <tbody>
+        ${data.questions.map(q => `
+          <tr>
+            <td>${q.question_text}</td>
+            <td>${q.type}</td>
+            <td>${q.required ? '✓' : '✗'}</td>
+            <td><button onclick="handleDeleteQuestion(${q.id})" class="btn-danger" style="padding: 6px 10px; font-size: 12px;">Delete</button></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>`;
+  }
+
+  let submissionsHtml = '';
+  if (!data.responses || data.responses.length === 0) {
+    submissionsHtml = '<p style="color: #94a3b8; text-align: center; padding: 20px;">No submissions yet</p>';
+  } else {
+    submissionsHtml = `
+      <div style="max-height: 400px; overflow-y: auto;">
+        ${data.responses.map((response, idx) => `
+          <div style="background: rgba(255,255,255,0.05); padding: 12px; margin-bottom: 12px; border-radius: 8px;">
+            <div style="color: #d4af37; font-weight: 600; margin-bottom: 8px;">
+              Submission #${data.responses.length - idx} - ${new Date(response.submitted_at).toLocaleString()}
+            </div>
+            <table style="width: 100%; font-size: 13px;">
+              <tbody>
+                ${response.answers.map(ans => `
+                  <tr>
+                    <td style="padding: 4px 8px; color: #9ca3af; width: 40%; border-bottom: 1px solid rgba(212,175,55,0.1);">
+                      <strong>${ans.question_text}</strong>
+                    </td>
+                    <td style="padding: 4px 8px; color: #cbd5e1; border-bottom: 1px solid rgba(212,175,55,0.1);">
+                      ${ans.answer_text || '<em style="color: #6f6f6f;">No answer</em>'}
+                    </td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  const detailHtml = `
+    <div style="margin-bottom: 20px;">
+      <div style="display: flex; justify-content: space-between; align-items: start;">
+        <div style="flex: 1;">
+          <h3>${event.title}</h3>
+          <p style="color: #94a3b8; font-size: 12px;">${event.id}</p>
+          <p>${event.description}</p>
+        </div>
+        <button onclick="downloadCSV('${event.id}')" style="background: #22c55e; color: white; padding: 10px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; white-space: nowrap; margin-left: 15px;">
+          📥 Download CSV
+        </button>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 20px;">
+      <h4 style="margin-bottom: 10px;">📝 Questions (${data.questions.length})</h4>
+      ${questionsHtml}
+      <button onclick="openModal('questionModal')" style="margin-top: 15px;">Add Question</button>
+    </div>
+
+    <div>
+      <h4 style="margin-bottom: 10px;">📋 Submissions (${data.responses.length})</h4>
+      ${submissionsHtml}
+    </div>
+  `;
+
+  document.getElementById('eventDetails').innerHTML = detailHtml;
+  openModal('eventModal');
+}
+
+async function handleAddQuestion() {
+  const text = document.getElementById('questionText').value;
+  const type = document.getElementById('questionType').value;
+  const options = document.getElementById('questionOptions').value;
+  const order = parseInt(document.getElementById('questionOrder').value);
+  const required = document.getElementById('questionRequired').checked;
+
+  if (!text) {
+    showAlert('Question text is required', 'error');
+    return;
+  }
+
+  let parsedOptions = null;
+  if (options.trim()) {
+    try {
+      parsedOptions = JSON.parse(options);
+    } catch (e) {
+      showAlert('Invalid JSON for options', 'error');
+      return;
+    }
+  }
+
+  const res = await authenticatedFetch('/api/admin/add-question', {
+    method: 'POST',
+    body: JSON.stringify({
+      event_id: currentEventId,
+      question_text: text,
+      type,
+      required,
+      options: parsedOptions,
+      order_no: order
+    })
+  });
+
+  if (!res) return;
+
+  const data = await res.json();
+  if (data.success) {
+    showAlert('Question added!');
+    document.getElementById('questionText').value = '';
+    document.getElementById('questionOptions').value = '';
+    closeModal('questionModal');
+    handleViewEvent(currentEventId);
+  } else {
+    showAlert('Error: ' + data.error, 'error');
+  }
+}
+
+async function handleDeleteQuestion(questionId) {
+  if (!confirm('Delete this question?')) return;
+
+  const res = await authenticatedFetch('/api/admin/delete-question', {
+    method: 'POST',
+    body: JSON.stringify({ id: questionId })
+  });
+
+  if (!res) return;
+
+  const data = await res.json();
+  if (data.success) {
+    showAlert('Question deleted!');
+    handleViewEvent(currentEventId);
+  } else {
+    showAlert('Error: ' + data.error, 'error');
+  }
+}
+
+function handleEditEventModal(id, title, desc) {
+  currentEventId = id;
+  document.getElementById('editEventTitle').value = title;
+  document.getElementById('editEventDesc').value = desc;
+  openModal('editEventModal');
+}
+
+async function handleUpdateEvent() {
+  const title = document.getElementById('editEventTitle').value;
+  const desc = document.getElementById('editEventDesc').value;
+
+  if (!title) {
+    showAlert('Title is required', 'error');
+    return;
+  }
+
+  const res = await authenticatedFetch('/api/admin/update-event', {
+    method: 'POST',
+    body: JSON.stringify({
+      id: currentEventId,
+      title,
+      description: desc,
+      is_active: true
+    })
+  });
+
+  if (!res) return;
+
+  const data = await res.json();
+  if (data.success) {
+    showAlert('Event updated!');
+    closeModal('editEventModal');
+    loadEvents();
+  } else {
+    showAlert('Error: ' + data.error, 'error');
+  }
+}
+
+async function handleDeleteEvent(id) {
+  if (!confirm('Delete this event? This cannot be undone.')) return;
+
+  const res = await authenticatedFetch('/api/admin/delete-event', {
+    method: 'POST',
+    body: JSON.stringify({ id })
+  });
+
+  if (!res) return;
+
+  const data = await res.json();
+  if (data.success) {
+    showAlert('Event deleted!');
+    loadEvents();
+  } else {
+    showAlert('Error: ' + data.error, 'error');
+  }
+}
+
+async function downloadCSV(eventId) {
+  try {
+    const res = await authenticatedFetch(`/api/admin/export-csv?id=${eventId}`);
+    if (!res) return;
+
+    const csv = await res.text();
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', `${eventId}-responses.csv`);
+    link.style.visibility = 'hidden';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showAlert('CSV downloaded successfully!');
+  } catch (error) {
+    console.error('Error downloading CSV:', error);
+    showAlert('Error downloading CSV: ' + error.message, 'error');
+  }
+}
+
+async function loadFeedbacks() {
+  try {
+    console.log('Loading feedbacks...');
+    const res = await authenticatedFetch('/api/admin/feedbacks');
+    if (!res) {
+      console.error('Failed to fetch feedbacks - no response');
+      return;
+    }
+    
+    const data = await res.json();
+    console.log('Feedbacks data:', data);
+
+    const tbody = document.getElementById('feedbackTableBody');
+    const feedbacks = data.feedbacks || [];
+
+    if (feedbacks.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="padding: 20px; text-align: center; color: #6f6f6f;">No feedback yet</td></tr>';
+      console.log('No feedbacks to display');
+      return;
+    }
+
+    console.log('Feedbacks count:', feedbacks.length);
+    tbody.innerHTML = feedbacks.map(f => {
+      const stars = f.rating ? '⭐'.repeat(f.rating) : '-';
+      const date = f.submitted_at ? new Date(f.submitted_at).toLocaleDateString() : 'N/A';
+      return `
+      <tr>
+        <td>${f.name}</td>
+        <td>${f.email}</td>
+        <td>${f.feedback_type || 'general'}</td>
+        <td>${stars}</td>
+        <td>${date}</td>
+        <td style="max-width: 200px; word-wrap: break-word;">${f.feedback_text}</td>
+      </tr>
+    `}).join('');
+    console.log('Feedbacks loaded successfully');
+  } catch (error) {
+    console.error('Error loading feedbacks:', error);
+    document.getElementById('feedbackTableBody').innerHTML = '<tr><td colspan="6" style="padding: 20px; text-align: center; color: #ef4444;">Error loading feedbacks: ' + error.message + '</td></tr>';
+  }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pak Debate Forum – Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      background: #0f172a;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      background: #020617;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      border: 1px solid #1e293b;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #020617;
+      border: 1px solid #334155;
+      color: white;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    button {
+      background: #2563eb;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .event {
+      padding: 12px;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    .event small {
+      color: #94a3b8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Admin Dashboard</h1>
+  <p>Pak Debate Forum</p>
+
+  <!-- CREATE EVENT -->
+  <div class="card">
+    <h2>Create Event</h2>
+
+    <input id="eventId" placeholder="Event ID (slug e.g. wsdc-2025)" />
+    <input id="eventTitle" placeholder="Event Title" />
+    <textarea id="eventDesc" placeholder="Event Description"></textarea>
+
+    <button onclick="createForumEvent()">Create Event</button>
+
+  </div>
+
+  <!-- EVENTS LIST -->
+  <div class="card">
+    <h2>Existing Events</h2>
+    <div id="events"></div>
+  </div>
+
+<script>
+const ADMIN_TOKEN = "mysuperadmintoken123";
+
+async function createForumEvent() {
+  alert("Button clicked");
+
+  const id = document.getElementById("eventId").value;
+  const title = document.getElementById("eventTitle").value;
+  const description = document.getElementById("eventDesc").value;
+
+  const res = await fetch("/api/admin/create-event", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-admin-token": ADMIN_TOKEN
+    },
+    body: JSON.stringify({ id, title, description })
+  });
+
+  alert(await res.text());
+  loadEvents();
+}
+
+async function loadEvents() {
+  const res = await fetch("/api/admin/events", {
+    headers: { "x-admin-token": ADMIN_TOKEN }
+  });
+
+  const data = await res.json();
+  const box = document.getElementById("events");
+  box.innerHTML = "";
+
+  data.events.forEach(e => {
+    const div = document.createElement("div");
+    div.className = "event";
+    div.innerHTML = `<b>${e.title}</b><br><small>${e.id}</small>`;
+    box.appendChild(div);
+  });
+}
+
+loadEvents();
+</script>
+
+
+
+
+</body>
+</html>

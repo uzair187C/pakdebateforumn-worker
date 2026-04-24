@@ -1,0 +1,31 @@
+npx wrangler secret put ADMIN_TOKEN
+ S0m3$tr0ngAdm1nT0k3n
+npx wrangler dev
+
+const ADMIN_TOKEN = "mysuperadmintoken123";
+
+/api/admin/events
+/admin.html <script>
+async function createEvent() {
+  alert("Button clicked"); // 🔴 DEBUG
+
+  const id = document.getElementById("eventId").value;
+  const title = document.getElementById("eventTitle").value;
+  const description = document.getElementById("eventDesc").value;
+
+  alert("Data: " + id + " | " + title); // 🔴 DEBUG
+
+  const res = await fetch("/api/admin/events", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ id, title, description })
+  });
+
+  const text = await res.text();
+  alert(text); // 🔴 SHOW RAW RESPONSE
+
+  loadEvents();
+}
+</script>

@@ -1,0 +1,15 @@
+# ==================== DEVELOPMENT ENVIRONMENT VARIABLES ====================
+# Copy this file to .dev.vars and fill in your actual values
+# .dev.vars is automatically gitignored for security
+
+# JWT Settings
+JWT_SECRET=your-super-secret-key-change-in-production
+
+# Admin Credentials (for local development only)
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=changeme123
+
+# Optional future additions
+# MAILGUN_API_KEY=your-mailgun-key
+# MAILGUN_DOMAIN=sandbox.mailgun.org
+# SENDGRID_API_KEY=your-sendgrid-key

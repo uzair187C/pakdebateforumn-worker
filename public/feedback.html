@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feedback | Pak Debate Forum</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #0a0e13 0%, #1a1f2e 100%);
+    }
+
+    .feedback-section {
+      padding: 60px 0;
+    }
+
+    .feedback-content {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .feedback-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .feedback-header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .feedback-header p {
+      color: var(--text-secondary);
+      font-size: 16px;
+    }
+
+    .feedback-card {
+      background: rgba(19, 26, 40, 0.4);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      padding: 40px;
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    #feedbackForm {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      color: var(--text);
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .form-group label.required::after {
+      content: " *";
+      color: #ef4444;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 12px 14px;
+      background: rgba(15, 17, 21, 0.6);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      color: var(--text);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(15, 17, 21, 0.8);
+      box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+      font-family: inherit;
+    }
+
+    .rating-group {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .star {
+      font-size: 40px;
+      cursor: pointer;
+      transition: var(--transition);
+      opacity: 0.4;
+      color: var(--accent);
+      user-select: none;
+    }
+
+    .star:hover {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+
+    .star.active {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+      color: #000;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
+      margin-top: 12px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(212, 175, 55, 0.35);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .error-message {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid #ef4444;
+      color: #fca5a5;
+      padding: 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .success-message {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid #22c55e;
+      color: #86efac;
+      padding: 24px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .success-message h2 {
+      color: #22c55e;
+      margin-bottom: 8px;
+      font-size: 20px;
+    }
+
+    .success-message p {
+      font-size: 14px;
+      margin: 0;
+    }
+
+    @media (max-width: 640px) {
+      .feedback-section {
+        padding: 40px 0;
+      }
+
+      .feedback-card {
+        padding: 24px;
+      }
+
+      .feedback-header h1 {
+        font-size: 24px;
+      }
+
+      .star {
+        font-size: 32px;
+      }
+
+      #feedbackForm {
+        gap: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <img src="img/pdflogo.png" alt="Pak Debate Forum">
+        <span class="brand-text">Pak Debate Forum</span>
+      </a>
+
+      <button id="nav-toggle" aria-label="Toggle menu" class="nav-toggle">☰</button>
+
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Home</a>
+        <a href="events.html">Events</a>
+        <a href="resources.html">Resources</a>
+        <a href="about.html">About</a>
+        <a href="feedback.html" class="active">Feedback</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- FEEDBACK SECTION -->
+  <section class="feedback-section">
+    <div class="container feedback-content">
+      <div class="feedback-header">
+        <h1>Share Your Feedback</h1>
+        <p>Help us improve Pak Debate Forum. Your thoughts and suggestions matter!</p>
+      </div>
+
+      <div class="feedback-card">
+        <div id="messageContainer"></div>
+
+        <form id="feedbackForm">
+          <!-- Name -->
+          <div class="form-group">
+            <label for="name" class="required">Your Name</label>
+            <input 
+              type="text" 
+              id="name" 
+              name="name" 
+              placeholder="Enter your full name"
+              required
+            >
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email" class="required">Email Address</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="Enter your email"
+              required
+            >
+          </div>
+
+          <!-- Rating -->
+          <div class="form-group">
+            <label>Rate Your Experience (Optional)</label>
+            <div class="rating-group" id="ratingGroup">
+              <span class="star" data-rating="1" title="Poor">★</span>
+              <span class="star" data-rating="2" title="Fair">★</span>
+              <span class="star" data-rating="3" title="Good">★</span>
+              <span class="star" data-rating="4" title="Very Good">★</span>
+              <span class="star" data-rating="5" title="Excellent">★</span>
+            </div>
+            <input type="hidden" id="rating" name="rating" value="0">
+          </div>
+
+          <!-- Feedback Type -->
+          <div class="form-group">
+            <label for="type" class="required">Feedback Type</label>
+            <select id="type" name="type" required>
+              <option value="">-- Select Type --</option>
+              <option value="general">General Feedback</option>
+              <option value="event">Event Experience</option>
+              <option value="website">Website & Interface</option>
+              <option value="support">Support & Services</option>
+              <option value="feature">Feature Request</option>
+            </select>
+          </div>
+
+          <!-- Feedback Text -->
+          <div class="form-group">
+            <label for="feedback" class="required">Your Feedback</label>
+            <textarea 
+              id="feedback" 
+              name="feedback" 
+              placeholder="Tell us what you think..."
+              required
+              minlength="10"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-submit">Submit Feedback</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="left">
+        <div class="brand-small">⟡ Pak Debate Forum</div>
+        <p class="muted">© 2025 Pak Debate Forum • Empowering debate culture in Pakistan</p>
+      </div>
+      <div class="right">
+        <nav class="footer-nav">
+          <a href="index.html">Home</a>
+          <a href="events.html">Events</a>
+          <a href="about.html">About</a>
+          <a href="feedback.html">Feedback</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navigation toggle
+    const navBtn = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    if (navBtn && navLinks) {
+      navBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navLinks.classList.toggle('open');
+      });
+
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.classList.remove('open');
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.navbar')) {
+          navLinks.classList.remove('open');
+        }
+      });
+    }
+
+    // Star rating functionality
+    let selectedRating = 0;
+    const stars = document.querySelectorAll('.star');
+    const ratingInput = document.getElementById('rating');
+
+    stars.forEach(star => {
+      star.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        selectedRating = parseInt(this.getAttribute('data-rating'), 10);
+        ratingInput.value = selectedRating;
+
+        // Update star display
+        stars.forEach((s, idx) => {
+          if (idx < selectedRating) {
+            s.classList.add('active');
+          } else {
+            s.classList.remove('active');
+          }
+        });
+
+        console.log('Rating selected:', selectedRating);
+      });
+
+      star.addEventListener('mouseenter', function() {
+        const hoverRating = parseInt(this.getAttribute('data-rating'), 10);
+        stars.forEach((s, idx) => {
+          s.style.opacity = idx < hoverRating ? '1' : '0.4';
+        });
+      });
+    });
+
+    // Reset opacity on mouse leave
+    const ratingGroup = document.getElementById('ratingGroup');
+    if (ratingGroup) {
+      ratingGroup.addEventListener('mouseleave', () => {
+        stars.forEach((s, idx) => {
+          s.style.opacity = idx < selectedRating ? '1' : '0.4';
+        });
+      });
+    }
+
+    // Form submission
+    const form = document.getElementById('feedbackForm');
+    const messageContainer = document.getElementById('messageContainer');
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Submitting...';
+
+        try {
+          // Get form values
+          const name = document.getElementById('name').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const rating = selectedRating > 0 ? selectedRating : null;
+          const feedbackType = document.getElementById('type').value;
+          const feedbackText = document.getElementById('feedback').value.trim();
+
+          // Validate
+          if (!name || !email || !feedbackType || !feedbackText) {
+            throw new Error('Please fill in all required fields');
+          }
+
+          if (feedbackText.length < 10) {
+            throw new Error('Feedback must be at least 10 characters');
+          }
+
+          // Prepare payload matching backend expectations
+          const payload = {
+            name,
+            email,
+            rating,
+            feedback_type: feedbackType,
+            feedback_text: feedbackText
+          };
+
+          console.log('Submitting feedback:', payload);
+
+          // Send to API
+          const response = await fetch('/api/feedback', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `HTTP ${response.status}`);
+          }
+
+          const result = await response.json();
+          console.log('Success:', result);
+
+          if (result.success) {
+            // Show success message
+            messageContainer.innerHTML = `
+              <div class="success-message">
+                <h2>✓ Thank You!</h2>
+                <p>Your feedback has been submitted successfully. We appreciate your input and will review it shortly.</p>
+              </div>
+            `;
+
+            // Clear form
+            form.reset();
+            selectedRating = 0;
+            ratingInput.value = '0';
+            stars.forEach(s => s.classList.remove('active'));
+            stars.forEach(s => s.style.opacity = '0.4');
+
+            // Redirect after 3 seconds
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 3000);
+          } else {
+            throw new Error(result.error || 'Submission failed');
+          }
+        } catch (error) {
+          console.error('Error:', error.message);
+
+          messageContainer.innerHTML = `
+            <div class="error-message">
+              <strong>Error:</strong> ${error.message}
+            </div>
+          `;
+
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+        }
+      });
+    }
+  </script>
+</body>
+</html>
